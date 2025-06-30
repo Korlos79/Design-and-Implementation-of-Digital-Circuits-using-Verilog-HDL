@@ -1,0 +1,24 @@
+module Counter_Parameter_4bit_Structural_Design.v(x, T, Clock, Q, In);
+input [3:0] x;
+output [3:0] Q;
+input T, In, Clock;
+wire A1, A2, A3, A4, O1, O2, O3, O4;
+and (A1, x[0], In);
+and (A2, x[1], In);
+and (A3, x[2], In);
+and (A4, x[3], In);
+wire nIn;
+not (nIn, In);
+or (O1, x[0], nIn);
+or (O2, x[1], nIn);
+or (O3, x[2], nIn);
+or (O4, x[3], nIn);
+wire T1, T2, T3;
+T_FF_With_Sync_Set_And_Reset(T, Q[0], Clock, A1, O1);
+and (T1, Q[0], T);
+T_FF_With_Sync_Set_And_Reset(T1, Q[1], Clock, A2, O2);
+and (T2, Q[1], T1);
+T_FF_With_Sync_Set_And_Reset(T2, Q[2], Clock, A3, O3);
+and (T3, Q[2], T2);
+T_FF_With_Sync_Set_And_Reset(T3, Q[3], Clock, A4, O4);
+endmodule 
