@@ -1,0 +1,20 @@
+module Hello_Display_Develop_Design(s2, s1, s0, u, v, w, x, y, m, n, l, q, k);
+input s2, s1, s0;
+input [2:0] u; 
+input [2:0] v; 
+input [2:0] w; 
+input [2:0] x; 
+input [2:0] y; 
+wire [2:0] c;
+output [6:0] m;
+output [6:0] n;
+output [6:0] l;
+output [6:0] q;
+output [6:0] k;
+Mux5to1_3bit(s2, s1, s0, u, v, w, x, y, c);
+BCDto7SegmentDecoder(c, m);
+BCDto7SegmentDecoder1(c, n);
+BCDto7SegmentDecoder2(c, l);
+BCDto7SegmentDecoder3(c, q);
+BCDto7SegmentDecoder4(c, k);
+endmodule 
