@@ -1,0 +1,51 @@
+module FSM(Output, Current_State, Input, Reset, CLK);
+//define_IO
+	input Input, Reset, CLK;
+	output reg Output;
+
+//define_wire/reg
+	output reg [1:0] Current_State;
+	reg [1:0] Next_State;
+//body
+	always @(posedge CLK or posedge Reset) begin
+		if(Reset)
+			Current_State <= 2'b00;
+		else 
+			Current_State <= Next_State;
+	end
+	
+	always @(Input or Current_State) begin
+		case (Current_State)
+			2'd0: begin
+						if (~Input) 
+							Next_State <= 2'd1;
+						else 
+							Next_State <= 2'd0;
+						Output <= 0;
+					end
+			2'd1: begin
+						if (Input) 
+							Next_State <= 2'd2;
+						else 
+							Next_State <= 2'd1;
+						Output <= 0;
+					end
+			2'd2: begin
+						if (~Input) 
+							Next_State <= 2'd3;
+						else 
+							Next_State <= 2'd0;
+						Output <= 0;
+					end
+			2'd3: begin
+						Next_State <= 2'd0;
+						Output <= 1;
+					end
+			default: begin
+							Next_State <= 2'd0;
+							Output <= 0;
+						end
+		endcase
+	end
+endmodule
+				
